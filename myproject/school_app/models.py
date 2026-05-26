@@ -16,6 +16,7 @@ class UserProfile(AbstractUser):
     full_name = models.CharField(max_length=150)
     phone_number = PhoneNumberField(null=True, blank=True)
 <<<<<<< HEAD
+<<<<<<< HEAD
     login = models.CharField(max_length=64)
     create_register = models.DateTimeField(auto_now_add=True)#черновик
 =======
@@ -23,10 +24,15 @@ class UserProfile(AbstractUser):
     login = models.CharField(max_length=64)
     create_register = models.DateTimeField(auto_now_add=True)
 >>>>>>> a3f4685408f1182b68358eb3169d9d32d815c96d
+=======
+    login = models.CharField(max_length=64)
+    create_register = models.DateTimeField(auto_now_add=True)#черновик
+>>>>>>> d8dbb0b8e4e4a42dcd5c08c747ea8a8f173c46c9
 
     def __str__(self):
         return f'{self.full_name}, {self.role}'
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
     def save(self, *args, **kwargs):
@@ -39,6 +45,8 @@ class UserProfile(AbstractUser):
         super().save(*args, **kwargs)
 
 >>>>>>> a3f4685408f1182b68358eb3169d9d32d815c96d
+=======
+>>>>>>> d8dbb0b8e4e4a42dcd5c08c747ea8a8f173c46c9
 class School(models.Model):
     name_school = models.CharField(max_length=255)
     address_school = models.TextField()
@@ -58,9 +66,13 @@ class Subject(models.Model):
 class Teacher(models.Model):
     teacher_name = models.CharField(max_length=64)
 <<<<<<< HEAD
+<<<<<<< HEAD
     subject_teacher = models.ForeignKey(Subject, on_delete=models.CASCADE)
 =======
 >>>>>>> a3f4685408f1182b68358eb3169d9d32d815c96d
+=======
+    subject_teacher = models.ForeignKey(Subject, on_delete=models.CASCADE)
+>>>>>>> d8dbb0b8e4e4a42dcd5c08c747ea8a8f173c46c9
 
     def __str__(self):
         return f'{self.teacher_name}'
@@ -73,10 +85,15 @@ class ClassGroup(models.Model):
         return f'{self.class_name}'
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 =======
 >>>>>>> a3f4685408f1182b68358eb3169d9d32d815c96d
+=======
+
+
+>>>>>>> d8dbb0b8e4e4a42dcd5c08c747ea8a8f173c46c9
 class StudentProfile(models.Model):
     user_student = models.OneToOneField(UserProfile, on_delete=models.CASCADE)
     class_group = models.ForeignKey(ClassGroup, on_delete=models.CASCADE)
@@ -93,11 +110,17 @@ class Lesson(models.Model):
     end_time = models.TimeField()
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     def __str__(self):
         return f'{self.subject.subject_name}'
 
 =======
 >>>>>>> a3f4685408f1182b68358eb3169d9d32d815c96d
+=======
+    def __str__(self):
+        return f'{self.subject.subject_name}'
+
+>>>>>>> d8dbb0b8e4e4a42dcd5c08c747ea8a8f173c46c9
 class Grade(models.Model):
     student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
@@ -108,20 +131,31 @@ class Grade(models.Model):
     ('4', '4'),
     ('5', '5'),
 <<<<<<< HEAD
+<<<<<<< HEAD
     ('H', 'H'),
     ('Нб', 'Нб')
 =======
 >>>>>>> a3f4685408f1182b68358eb3169d9d32d815c96d
+=======
+    ('H', 'H'),
+    ('Нб', 'Нб')
+>>>>>>> d8dbb0b8e4e4a42dcd5c08c747ea8a8f173c46c9
     )
     value_choices = models.CharField(max_length=10, choices=VALUE_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True)
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     def __str__(self):
         return f'{self.student.full_name}'
 
 =======
 >>>>>>> a3f4685408f1182b68358eb3169d9d32d815c96d
+=======
+    def __str__(self):
+        return f'{self.student.full_name}'
+
+>>>>>>> d8dbb0b8e4e4a42dcd5c08c747ea8a8f173c46c9
     def predicted_quarter_grade(self):
         grades = Grade.objects.filter(student=self.student, subject=self.subject)
         if not grades.exists():
@@ -139,17 +173,24 @@ class QuarterGrade(models.Model):
     )
     quarter_choices = models.CharField(max_length=10, choices=QUARTER_CHOICES)
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     def __str__(self):
         return f'{self.student.full_name}'
 =======
     final_grade = models.IntegerField()
 >>>>>>> a3f4685408f1182b68358eb3169d9d32d815c96d
+=======
+
+    def __str__(self):
+        return f'{self.student.full_name}'
+>>>>>>> d8dbb0b8e4e4a42dcd5c08c747ea8a8f173c46c9
 
 class Homework(models.Model):
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
     title = models.CharField(max_length=150)
     file_url = models.URLField(blank=True, null=True)
+<<<<<<< HEAD
 <<<<<<< HEAD
     deadline = models.DateField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -162,6 +203,14 @@ class Homework(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 >>>>>>> a3f4685408f1182b68358eb3169d9d32d815c96d
+=======
+    deadline = models.DateField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.title}'
+
+>>>>>>> d8dbb0b8e4e4a42dcd5c08c747ea8a8f173c46c9
 
 class Book(models.Model):
     title = models.CharField(max_length=150)
@@ -171,6 +220,9 @@ class Book(models.Model):
     file_url = models.URLField()
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d8dbb0b8e4e4a42dcd5c08c747ea8a8f173c46c9
     def __str__(self):
         return f'{self.title}'
 
@@ -191,8 +243,11 @@ class Chat(models.Model):
     create_group = models.DateTimeField(auto_now_add=True)
 
 
+<<<<<<< HEAD
 =======
 >>>>>>> a3f4685408f1182b68358eb3169d9d32d815c96d
+=======
+>>>>>>> d8dbb0b8e4e4a42dcd5c08c747ea8a8f173c46c9
 
 
 
