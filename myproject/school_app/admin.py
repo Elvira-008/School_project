@@ -12,3 +12,6 @@ admin.site.register(Lesson)
 admin.site.register(QuarterGrade)
 admin.site.register(Homework)
 admin.site.register(Book)
+
+
+

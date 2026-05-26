@@ -15,21 +15,11 @@ class UserProfile(AbstractUser):
     role = models.CharField(max_length=20, choices=ROLE_CHOICES, default="student")
     full_name = models.CharField(max_length=150)
     phone_number = PhoneNumberField(null=True, blank=True)
-    email = models.EmailField(null=True, blank=True)
     login = models.CharField(max_length=64)
-    create_register = models.DateTimeField(auto_now_add=True)
+    create_register = models.DateTimeField(auto_now_add=True)#черновик
 
     def __str__(self):
         return f'{self.full_name}, {self.role}'
-
-    def save(self, *args, **kwargs):
-        if self.password.startswith("S-"):
-            self.role = "teacher"
-        elif self.password.startswith("A-"):
-            self.role = "admin"
-        else:
-            self.role = "student"
-        super().save(*args, **kwargs)
 
 class School(models.Model):
     name_school = models.CharField(max_length=255)
@@ -49,6 +39,7 @@ class Subject(models.Model):
 
 class Teacher(models.Model):
     teacher_name = models.CharField(max_length=64)
+    subject_teacher = models.ForeignKey(Subject, on_delete=models.CASCADE)
 
     def __str__(self):
         return f'{self.teacher_name}'
@@ -59,6 +50,8 @@ class ClassGroup(models.Model):
 
     def __str__(self):
         return f'{self.class_name}'
+
+
 
 class StudentProfile(models.Model):
     user_student = models.OneToOneField(UserProfile, on_delete=models.CASCADE)
@@ -75,6 +68,9 @@ class Lesson(models.Model):
     start_time = models.TimeField()
     end_time = models.TimeField()
 
+    def __str__(self):
+        return f'{self.subject.subject_name}'
+
 class Grade(models.Model):
     student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
@@ -84,9 +80,14 @@ class Grade(models.Model):
     ('3', '3'),
     ('4', '4'),
     ('5', '5'),
+    ('H', 'H'),
+    ('Нб', 'Нб')
     )
     value_choices = models.CharField(max_length=10, choices=VALUE_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.student.full_name}'
 
     def predicted_quarter_grade(self):
         grades = Grade.objects.filter(student=self.student, subject=self.subject)
@@ -104,14 +105,19 @@ class QuarterGrade(models.Model):
     ('5', '5'),
     )
     quarter_choices = models.CharField(max_length=10, choices=QUARTER_CHOICES)
-    final_grade = models.IntegerField()
+
+    def __str__(self):
+        return f'{self.student.full_name}'
 
 class Homework(models.Model):
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
     title = models.CharField(max_length=150)
     file_url = models.URLField(blank=True, null=True)
-    deadline = models.DateField()
+    deadline = models.DateField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.title}'
 
 
 class Book(models.Model):
@@ -120,6 +126,26 @@ class Book(models.Model):
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     grade_level = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(11)])
     file_url = models.URLField()
+
+    def __str__(self):
+        return f'{self.title}'
+
+class Message(models.Model):
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    message = models.TextField()
+    file = models.FileField(upload_to='file/')
+    voice = models.FileField(upload_to='voices/')
+    sticker = models.FileField(upload_to='stickers/')
+    message_date = models.DateTimeField(auto_now_add=True)
+
+class Chat(models.Model):
+    admin = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='admin')
+    user = models.ManyToManyField(UserProfile, related_name='user')
+    group_name = models.CharField(max_length=64)
+    group_image = models.ImageField(upload_to='group_image/')
+    class_chat = models.ForeignKey(ClassGroup, on_delete=models.CASCADE)
+    create_group = models.DateTimeField(auto_now_add=True)
+
 
 
 
