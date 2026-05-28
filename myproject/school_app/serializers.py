@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import (UserProfile, School, Subject, Teacher, ClassGroup, StudentProfile, Lesson, Grade, QuarterGrade, Homework, Book, Chat, Message)
+from .models import (UserProfile, School, Subject, Teacher, ClassGroup, StudentProfile, Lesson, Grade, QuarterGrade, Homework, Book, Attendance)
 
 class UserProfileSimpleSerializer(serializers.ModelSerializer):
     class Meta:
