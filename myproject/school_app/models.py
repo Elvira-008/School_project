@@ -51,8 +51,6 @@ class ClassGroup(models.Model):
     def __str__(self):
         return f'{self.class_name}'
 
-
-
 class StudentProfile(models.Model):
     user_student = models.OneToOneField(UserProfile, on_delete=models.CASCADE)
     class_group = models.ForeignKey(ClassGroup, on_delete=models.CASCADE)
