@@ -1,5 +1,4 @@
 from datetime import timezone
-
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
@@ -97,6 +96,8 @@ class Grade(models.Model):
         if not grades.exists():
             return 0
         return round(sum(g.value_choices for g in grades) / grades.count(), 2)
+
+
 
 
 class QuarterGrade(models.Model):
