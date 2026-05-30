@@ -1,5 +1,4 @@
 from datetime import timezone
-
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
@@ -99,6 +98,8 @@ class Grade(models.Model):
         return round(sum(g.value_choices for g in grades) / grades.count(), 2)
 
 
+
+
 class QuarterGrade(models.Model):
     student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
@@ -137,41 +138,6 @@ class Book(models.Model):
     def __str__(self):
         return f'{self.title}'
 
-<<<<<<< HEAD
-
-class Attendance(models.Model):
-    STATUS_CHOICES=(
-    ("present","present"),
-    ("absent","absent"),
-    )
-    student = models.ForeignKey(StudentProfile,on_delete=models.CASCADE)
-    lesson = models.ForeignKey(Lesson,on_delete=models.CASCADE)
-    status = models.CharField(max_length=10,choices=STATUS_CHOICES)
-    created_at = models.DateTimeField(auto_now_add=True)
-    absent_time = models.DateTimeField(null=True, blank=True)
-    present_time = models.DateTimeField(null=True, blank=True)
-    late_minutes = models.IntegerField(default=0)
-
-    def save(self, *args, **kwargs):
-        if self.status == "absent" and not self.absent_time:
-            self.absent_time = timezone.now()
-        if self.status == "present" and self.absent_time and not self.present_time:
-            self.present_time = timezone.now()
-            diff = self.present_time - self.absent_time
-            self.late_minutes = int(diff.total_seconds() // 60)
-        super().save(*args, **kwargs)
-    def __str__(self):
-        return f'{self.student.user_student}'
-
-
-
-
-
-
-
-
-=======
->>>>>>> 22676b836ac1e9b585c04443a4d0fb9f1ef5458f
 
 class Attendance(models.Model):
     STATUS_CHOICES=(
