@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import (UserProfile, School, Subject, Teacher, ClassGroup, StudentProfile, Lesson, Grade, QuarterGrade, Homework, Book, Chat, Message)
+from .models import (UserProfile, School, Subject, Teacher, ClassGroup, StudentProfile, Lesson, Grade, QuarterGrade, Homework, Book)
 
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
@@ -54,14 +54,4 @@ class HomeworkSerializer(serializers.ModelSerializer):
 class BookSerializer(serializers.ModelSerializer):
     class Meta:
         model = Book
-        fields = '__all__'
-
-class ChatSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Chat
-        fields = '__all__'
-
-class MessageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Message
         fields = '__all__'
