@@ -92,7 +92,7 @@ class BookSerializer(serializers.ModelSerializer):
         model = Book
         fields = ['title', 'author', 'subject', 'grade_level', 'file_url']
 
-class Attendance(serializers.ModelSerializer):
+class AttendanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Attendance
         fields = ['student', 'lesson', 'status', 'created_at', 'absent_time', 'present_time', 'late_minutes']

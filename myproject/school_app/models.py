@@ -84,7 +84,7 @@ class Grade(models.Model):
     ('н', 'н'),
     ('нб', 'нб')
     )
-    value_choices = models.CharField(max_length=10, choices=VALUE_CHOICES)
+    value_choices = models.CharField(max_length=10, choices=VALUE_CHOICES, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
