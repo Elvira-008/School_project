@@ -96,6 +96,8 @@ class Grade(models.Model):
             return 0
         return round(sum(g.value_choices for g in grades) / grades.count(), 2)
 
+
+
 class QuarterGrade(models.Model):
     student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
@@ -158,13 +160,3 @@ class Attendance(models.Model):
         super().save(*args, **kwargs)
     def __str__(self):
         return f'{self.student.user_student}'
-
-
-
-
-
-
-
-
-
-
