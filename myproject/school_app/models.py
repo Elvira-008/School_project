@@ -142,6 +142,7 @@ class Attendance(models.Model):
     ("present","present"),
     ("absent","absent"),
     )
+    grade = models.ForeignKey(Grade, on_delete=models.CASCADE)
     student = models.ForeignKey(StudentProfile,on_delete=models.CASCADE)
     lesson = models.ForeignKey(Lesson,on_delete=models.CASCADE)
     status = models.CharField(max_length=10,choices=STATUS_CHOICES)
@@ -153,10 +154,39 @@ class Attendance(models.Model):
     def save(self, *args, **kwargs):
         if self.status == "absent" and not self.absent_time:
             self.absent_time = timezone.now()
+
         if self.status == "present" and self.absent_time and not self.present_time:
             self.present_time = timezone.now()
             diff = self.present_time - self.absent_time
             self.late_minutes = int(diff.total_seconds() // 60)
+
         super().save(*args, **kwargs)
+
+        teacher = Teacher.objects.filter(lesson=self.lesson).first()
+
+        if not teacher:
+            return
+
+        grade = Grade.objects.filter(
+            student=self.student,
+            subject=self.lesson.subject,
+            teacher=teacher
+        ).first()
+
+        if not grade:
+            grade = Grade.objects.create(
+                student=self.student,
+                subject=self.lesson.subject,
+                teacher=teacher,
+                value_choices="н"
+            )
+
+        if self.status == "absent":
+            grade.value_choices = "н"
+            grade.save()
+
+        elif self.status == "present":
+            if grade.value_choices == "н":
+                grade.delete()
     def __str__(self):
         return f'{self.student.user_student}'
