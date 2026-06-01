@@ -19,7 +19,7 @@ class UserProfileSimpleAPIView(generics.ListAPIView):
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSimpleSerializer
 
-class SchoolListAPIViw(generics.ListAPIView):
+class SchoolListAPIView(generics.ListAPIView):
     queryset = School.objects.all()
     serializer_class = SchoolListSerializer
 
@@ -27,11 +27,11 @@ class SchoolCreateAPIView(generics.CreateAPIView):
     queryset = School.objects.all()
     serializer_class = SchoolDetailSerializer
 
-class SchoolDetailAPIViw(generics.RetrieveAPIView):
+class SchoolDetailAPIView(generics.RetrieveAPIView):
     queryset = School.objects.all()
     serializer_class = SchoolDetailSerializer
 
-class SchoolEditAPIViw(generics.DestroyAPIView):
+class SchoolEditAPIView(generics.DestroyAPIView):
     queryset = School.objects.all()
     serializer_class = SchoolDetailSerializer
 
