@@ -12,9 +12,5 @@ admin.site.register(Lesson)
 admin.site.register(QuarterGrade)
 admin.site.register(Homework)
 admin.site.register(Book)
-<<<<<<< HEAD
-=======
 admin.site.register(Attendance)
 admin.site.register(Grade)
-
->>>>>>> fd5d503b9c3867da7510ba5c0cdf6894eb8f88f1

@@ -1,9 +1,6 @@
 from rest_framework import serializers
-<<<<<<< HEAD
-from .models import (UserProfile, School, Subject, Teacher, ClassGroup, StudentProfile, Lesson, Grade, QuarterGrade, Homework, Book)
-=======
 from .models import (UserProfile, School, Subject, Teacher, ClassGroup, StudentProfile, Lesson, Grade, QuarterGrade, Homework, Book, Attendance)
->>>>>>> fd5d503b9c3867da7510ba5c0cdf6894eb8f88f1
+
 
 class UserProfileSimpleSerializer(serializers.ModelSerializer):
     class Meta:
@@ -94,15 +91,9 @@ class HomeworkSerializer(serializers.ModelSerializer):
 class BookSerializer(serializers.ModelSerializer):
     class Meta:
         model = Book
-<<<<<<< HEAD
-        fields = '__all__'
-=======
         fields = ['title', 'author', 'subject', 'grade_level', 'file_url']
 
 class AttendanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Attendance
         fields = ['student', 'lesson', 'status', 'created_at', 'absent_time', 'present_time', 'late_minutes']
-
-
->>>>>>> fd5d503b9c3867da7510ba5c0cdf6894eb8f88f1
