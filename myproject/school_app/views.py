@@ -115,6 +115,10 @@ class BookEditAPIView(generics.RetrieveDestroyAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
 
+class AttendanceListAPIView(generics.ListAPIView):
+    queryset = Attendance.objects.all()
+    serializer_class = AttendanceSerializer
+
 class AttendanceUpdateAPIView(generics.UpdateAPIView):
     queryset = Attendance.objects.all()
     serializer_class = AttendanceSerializer
