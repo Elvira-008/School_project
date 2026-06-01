@@ -17,10 +17,4 @@ admin.site.register(Book)
 admin.site.register(Attendance)
 admin.site.register(Grade)
 
-def check_admin_limit(obj, limit_minutes):
-    from django.utils import timezone
-
-    if obj.created_at and timezone.now() > obj.created_at + timezone.timedelta(minutes=limit_minutes):
-        raise ValidationError("Нельзя изменять посещаемость")
-
 
