@@ -101,8 +101,6 @@ class GradeListAPIView(generics.ListAPIView):
     serializer_class = GradeListSerializer
     permission_classes = [IsTeacherOfLesson]
 
-
-
 class GradeDetailAPIView(generics.RetrieveAPIView):
     queryset = Grade.objects.all()
     serializer_class = GradeDetailSerializer
