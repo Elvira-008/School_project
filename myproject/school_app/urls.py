@@ -1,7 +1,7 @@
 from django.urls import path, include
 from rest_framework.routers import SimpleRouter
 from .views import (UserProfileListAPIView, UserProfileDetailAPIView, UserProfileSimpleAPIView,
-                    SchoolListAPIViw, SchoolCreateAPIView, SchoolDetailAPIViw, SchoolEditAPIViw,
+                    SchoolListAPIView, SchoolCreateAPIView, SchoolDetailAPIView, SchoolEditAPIView,
                     SubjectCreateAPIView, SubjectEditAPIView, TeacherCreateAPIView, TeacherEditAPIView,
                     ClassListAPIView, ClassCreateAPIView, ClassEditAPIView, StudentProfileListAPIView,
                     LessonListAPIView, LessonDetailAPIView, LessonEditAPIView, GradeListAPIView,
