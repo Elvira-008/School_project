@@ -1,4 +1,5 @@
 from django.contrib import admin
+
 from .models import (UserProfile, School, Subject, Teacher, ClassGroup,
                      StudentProfile, Lesson, QuarterGrade, Homework, Book, Attendance, Grade)
 

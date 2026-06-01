@@ -1,4 +1,5 @@
 from datetime import timezone
+from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
@@ -48,6 +49,20 @@ class StudentProfile(models.Model):
     school = models.ForeignKey(School, on_delete=models.CASCADE)
     user_student = models.OneToOneField(UserProfile, on_delete=models.CASCADE)
     class_group = models.ForeignKey(ClassGroup, on_delete=models.CASCADE)
+
+    def predicted_quarter_grade(self):
+        grades = Grade.objects.filter(
+            student=self.student,
+            subject=self.subject,
+            value_choices__in=["2", "3", "4", "5"]
+        )
+
+        if not grades.exists():
+            return 0
+
+        values = [int(g.value_choices) for g in grades]
+
+        return round(sum(values) / len(values), 2)
 
     def __str__(self):
         return f'{self.user_student}'
@@ -99,7 +114,6 @@ class Grade(models.Model):
 
 
 
-
 class QuarterGrade(models.Model):
     student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
@@ -144,6 +158,7 @@ class Attendance(models.Model):
     ("present","present"),
     ("absent","absent"),
     )
+    grade = models.ForeignKey(Grade, on_delete=models.CASCADE)
     student = models.ForeignKey(StudentProfile,on_delete=models.CASCADE)
     lesson = models.ForeignKey(Lesson,on_delete=models.CASCADE)
     status = models.CharField(max_length=10,choices=STATUS_CHOICES)
@@ -155,10 +170,41 @@ class Attendance(models.Model):
     def save(self, *args, **kwargs):
         if self.status == "absent" and not self.absent_time:
             self.absent_time = timezone.now()
+
         if self.status == "present" and self.absent_time and not self.present_time:
             self.present_time = timezone.now()
             diff = self.present_time - self.absent_time
             self.late_minutes = int(diff.total_seconds() // 60)
+
         super().save(*args, **kwargs)
+
+        teacher = Teacher.objects.filter(lesson=self.lesson).first()
+
+        if not teacher:
+            return
+
+        grade = Grade.objects.filter(
+            student=self.student,
+            subject=self.lesson.subject,
+            teacher=teacher
+        ).first()
+
+        if not grade:
+            grade = Grade.objects.create(
+                student=self.student,
+                subject=self.lesson.subject,
+                teacher=teacher,
+                value_choices="н"
+            )
+
+        if self.status == "absent":
+            grade.value_choices = "н"
+            grade.save()
+
+        elif self.status == "present":
+            if grade.value_choices == "н":
+                grade.delete()
     def __str__(self):
         return f'{self.student.user_student}'
+
+
