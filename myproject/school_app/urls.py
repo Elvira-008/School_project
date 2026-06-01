@@ -1,6 +1,13 @@
 from django.urls import path, include
 from rest_framework.routers import SimpleRouter
-from .views import (UserProfileListAPIView, UserProfileDetailAPIView, UserProfileSimpleAPIView, SchoolListAPIViw, SchoolCreateAPIView, SchoolDetailAPIViw, SchoolEditAPIViw, SubjectCreateAPIView, SubjectEditAPIView, TeacherCreateAPIView, TeacherEditAPIView, ClassListAPIView, ClassCreateAPIView, ClassEditAPIView, StudentProfileListAPIView, LessonListAPIView, LessonDetailAPIView, LessonEditAPIView, GradeListAPIView, GradeDetailAPIView, GradeUpdateAPIView, QuarterGradeListAPIView, QuarterGradeDetailAPIView, QuarterGradeEditAPIView, HomeworkViewSet, BookCreateAPIView, BookEditAPIView, AttendanceUpdateAPIView)
+from .views import (UserProfileListAPIView, UserProfileDetailAPIView, UserProfileSimpleAPIView,
+                    SchoolListAPIViw, SchoolCreateAPIView, SchoolDetailAPIViw, SchoolEditAPIViw,
+                    SubjectCreateAPIView, SubjectEditAPIView, TeacherCreateAPIView, TeacherEditAPIView,
+                    ClassListAPIView, ClassCreateAPIView, ClassEditAPIView, StudentProfileListAPIView,
+                    LessonListAPIView, LessonDetailAPIView, LessonEditAPIView, GradeListAPIView,
+                    GradeDetailAPIView, GradeUpdateAPIView, QuarterGradeListAPIView, QuarterGradeDetailAPIView,
+                    QuarterGradeEditAPIView, HomeworkViewSet, BookCreateAPIView, BookEditAPIView,
+                    AttendanceUpdateAPIView, AttendanceListAPIView)
 
 router = SimpleRouter()
 router.register(r'homeworks', HomeworkViewSet)
@@ -33,5 +40,6 @@ urlpatterns = [
     path('quarter-grades/<int:pk>/edit/', QuarterGradeEditAPIView.as_view(), name='quarter-grade-edit'),
     path('books/create/', BookCreateAPIView.as_view(), name='book-create'),
     path('books/<int:pk>/', BookEditAPIView.as_view(), name='book-edit'),
+    path('attendance/', AttendanceListAPIView.as_view(),name='attendance-list'),
     path('attendance/<int:pk>/update/', AttendanceUpdateAPIView.as_view(), name='attendance-update'),
 ]

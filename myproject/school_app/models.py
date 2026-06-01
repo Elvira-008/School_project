@@ -1,4 +1,5 @@
 from datetime import timezone
+from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
@@ -48,6 +49,20 @@ class StudentProfile(models.Model):
     school = models.ForeignKey(School, on_delete=models.CASCADE)
     user_student = models.OneToOneField(UserProfile, on_delete=models.CASCADE)
     class_group = models.ForeignKey(ClassGroup, on_delete=models.CASCADE)
+
+    def predicted_quarter_grade(self):
+        grades = Grade.objects.filter(
+            student=self.student,
+            subject=self.subject,
+            value_choices__in=["2", "3", "4", "5"]
+        )
+
+        if not grades.exists():
+            return 0
+
+        values = [int(g.value_choices) for g in grades]
+
+        return round(sum(values) / len(values), 2)
 
     def __str__(self):
         return f'{self.user_student}'
@@ -191,3 +206,5 @@ class Attendance(models.Model):
                 grade.delete()
     def __str__(self):
         return f'{self.student.user_student}'
+
+
