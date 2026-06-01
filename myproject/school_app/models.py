@@ -98,8 +98,6 @@ class Grade(models.Model):
         return round(sum(g.value_choices for g in grades) / grades.count(), 2)
 
 
-
-
 class QuarterGrade(models.Model):
     student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
