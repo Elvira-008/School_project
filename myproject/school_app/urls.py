@@ -1,13 +1,13 @@
 from django.urls import path, include
 from rest_framework.routers import SimpleRouter
 from .views import (UserProfileListAPIView, UserProfileDetailAPIView, UserProfileSimpleAPIView,
-                    SchoolListAPIViw, SchoolCreateAPIView, SchoolDetailAPIViw, SchoolEditAPIViw,
+                    SchoolListAPIView, SchoolCreateAPIView, SchoolDetailAPIView, SchoolEditAPIView,
                     SubjectCreateAPIView, SubjectEditAPIView, TeacherCreateAPIView, TeacherEditAPIView,
                     ClassListAPIView, ClassCreateAPIView, ClassEditAPIView, StudentProfileListAPIView,
                     LessonListAPIView, LessonDetailAPIView, LessonEditAPIView, GradeListAPIView,
                     GradeDetailAPIView, GradeUpdateAPIView, QuarterGradeListAPIView, QuarterGradeDetailAPIView,
                     QuarterGradeEditAPIView, HomeworkViewSet, BookCreateAPIView, BookEditAPIView,
-                    AttendanceUpdateAPIView, AttendanceListAPIView)
+                    AttendanceUpdateAPIView, AttendanceListAPIView, RegisterView, CustomLoginView, LogoutView)
 
 router = SimpleRouter()
 router.register(r'homeworks', HomeworkViewSet)
@@ -17,10 +17,10 @@ urlpatterns = [
     path('users/', UserProfileListAPIView.as_view(), name='user-list'),
     path('users/<int:pk>/', UserProfileDetailAPIView.as_view(), name='user-detail'),
     path('users/simple/', UserProfileSimpleAPIView.as_view(), name='user-simple'),
-    path('schools/', SchoolListAPIViw.as_view(), name='school-list'),
+    path('schools/', SchoolListAPIView.as_view(), name='school-list'),
     path('schools/create/', SchoolCreateAPIView.as_view(), name='school-create'),
-    path('schools/<int:pk>/', SchoolDetailAPIViw.as_view(), name='school-detail'),
-    path('schools/<int:pk>/delete/', SchoolEditAPIViw.as_view(), name='school-delete'),
+    path('schools/<int:pk>/', SchoolDetailAPIView.as_view(), name='school-detail'),
+    path('schools/<int:pk>/delete/', SchoolEditAPIView.as_view(), name='school-delete'),
     path('subjects/create/', SubjectCreateAPIView.as_view(), name='subject-create'),
     path('subjects/<int:pk>/delete/', SubjectEditAPIView.as_view(), name='subject-delete'),
     path('teachers/create/', TeacherCreateAPIView.as_view(), name='teacher-create'),
@@ -42,4 +42,7 @@ urlpatterns = [
     path('books/<int:pk>/', BookEditAPIView.as_view(), name='book-edit'),
     path('attendance/', AttendanceListAPIView.as_view(),name='attendance-list'),
     path('attendance/<int:pk>/update/', AttendanceUpdateAPIView.as_view(), name='attendance-update'),
+    path('register/', RegisterView.as_view(), name='register'),
+    path('login/', CustomLoginView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
 ]
